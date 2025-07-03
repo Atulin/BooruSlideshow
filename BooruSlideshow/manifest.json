@@ -1,10 +1,10 @@
 {
 	"manifest_version": 3,
 
-	"name": "Booru Slideshow",
-	"short_name": "Booru SS",
+	"name": "Booru Slideshow 2",
+	"short_name": "Booru SS2",
 	"description": "View a slideshow from a Booru site based on your search.",
-	"version": "10.5",
+	"version": "10.6",
 
 	"action":
 	{

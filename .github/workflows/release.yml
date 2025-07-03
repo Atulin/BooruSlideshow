@@ -23,11 +23,23 @@ jobs:
         zip -r ../BooruSlideshow.zip ./*
         cd ..
 
+    - name: Sign Firefox Extension
+      uses: kewisch/action-web-ext@v1
+      with:
+        source: ./BooruSlideshow.zip
+        channel: unlisted
+        filename: BooruSlideshow.xpi
+      env:
+        WEB_EXT_API_KEY: ${{ secrets.MOZ_ISSUER }}
+        WEB_EXT_API_SECRET: ${{ secrets.MOZ_SECRET }}
+
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ env.RELEASE_NAME }}
         name: ${{ env.RELEASE_NAME }}
-        files: BooruSlideshow.zip
+        files: |
+          BooruSlideshow.zip
+          BooruSlideshow.xpi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
