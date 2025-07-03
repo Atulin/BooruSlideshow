@@ -1,0 +1,33 @@
+name: Create Release for BooruSlideshow
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags like v1.0.0
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up variables
+      id: vars
+      run: echo "RELEASE_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+    - name: Zip BooruSlideshow folder
+      run: |
+        cd BooruSlideshow
+        zip -r ../BooruSlideshow.zip ./*
+        cd ..
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ env.RELEASE_NAME }}
+        name: ${{ env.RELEASE_NAME }}
+        files: BooruSlideshow.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
